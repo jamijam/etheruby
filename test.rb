@@ -8,15 +8,15 @@ class Citizen < Etheruby::Contract
   # ABI Definition
   method :greet
   method :multiple do
-    parameters :int256, :int256
-    returns :int256
+    parameters :uint256, :uint256
+    returns :uint256
     value 1
     gas 100
     gas_price 10000
   end
 end
 
-# Calling greet method on citizine
+# Calling greet method on citizen
 puts "Citizen.greet"
 Citizen.greet
 puts "----------------"
