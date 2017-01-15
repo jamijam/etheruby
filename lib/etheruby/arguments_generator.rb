@@ -15,24 +15,20 @@ module Etheruby
     def to_s
       raise ArgumentsCountError.new unless params.count == args.count
       arguments = ""
+
       (0..params.count-1).each do |i|
         param, arg = params[i], args[i]
-
         if match = param.match(/^([a-z]+)(\d+)$/)
           method_name = "#{match[1]}_encode".to_sym
-          #puts method_name.inspect
           if respond_to?(method_name)
             arguments += send(method_name, match[2].to_i, arg)
           else
             raise IncorrectTypeError.new("Type #{param} cannot be encoded")
           end
-
         elsif match = param.match(/^([a-z]+)\[(\d+)\]$/)
           arguments += static_array(match[1], match[2].to_i, arg)
-
         elsif match = param.match(/^([a-z]+)\[\]$/)
           arguments += dynamic_array(match[1], arg)
-
         else
           method_name = "#{param}_encode".to_sym
           if respond_to?(method_name)
@@ -67,7 +63,7 @@ module Etheruby
     end
 
     def byte_encode(size, arg)
-      #Todo
+      arg.map{ |b| b.to_s(16) }.join.rjust(size,'0')
     end
 
     def static_array(type, size, arg)
@@ -75,7 +71,7 @@ module Etheruby
     end
 
     def dynamic_array(type, arg)
-      #Todos
+      #Todo
     end
 
     #====
