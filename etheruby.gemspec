@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'etheruby'
-  s.version = '0.0.1'
-  s.date = '2017-01-06'
+  s.version = '0.0.2'
+  s.date = '2017-01-16'
   s.summary = 'Etheruby : Ethereum smart-contract classy-describer for Ruby.'
   s.description = 'Describe ethereum smart-contract and execute them with ease.'
   s.authors = ['Jérémy SEBAN']

@@ -77,40 +77,58 @@ module Etheruby
       arg.to_s(16).rjust(size / 4,'0')
     end
 
+    ##
+    # fixed<X> encoding
     def fixed_encode(size, arg)
       #Todo
     end
 
+    ##
+    # ufixed<X> encoding
     def ufixed_encode(size, arg)
       #Todo
     end
 
-    def byte_encode(size, arg)
-      arg.map{ |b| b.to_s(16) }.join.rjust(size,'0')
-    end
-
+    ##
+    # Encode a static array
     def static_array(type, size, arg)
       #Todo
     end
 
+    ##
+    # Creates a dynamic array
     def dynamic_array(type, arg)
       #Todo
     end
 
+    ##
+    # byte<X> encodeing
+    def byte_encode(size, arg)
+      arg.map{ |b| b.to_s(16) }.join.rjust(size,'0')
+    end
+
+    ##
+    # address<X> encoding
     def address_encode(arg)
       uint_encode(160, arg)
     end
 
+    ##
+    # string<x> encoding (as bytes)
     def string_encode(arg)
-      #Todo
+      bytes_encode(arg.codepoints)
     end
 
+    ##
+    # bytes (dynamic size) encoding
     def bytes_encode(arg)
-      #Todo
+      uint_encode(256, arg.count) + arg.map{ |b| b.to_s(16) }.join
     end
 
+    ##
+    # boolean encoding (as uint8)
     def bool_encode(arg)
-      #Todo
+      uint_encode(8, arg ? 1 : 0)
     end
 
   end
