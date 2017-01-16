@@ -33,7 +33,6 @@ module Etheruby
     def validate!
       data[:params] = [] unless data.has_key? :params
       signature = "#{@data[:name]}(#{data[:params].join(',')})"
-      # Generating the signature of this method
       data[:signature] = "0x#{Digest::SHA3.hexdigest(signature,256)[0..7]}"
       data
     end

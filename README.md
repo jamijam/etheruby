@@ -1,5 +1,7 @@
 # Etheruby
 
+**This is a work in progress !**
+
 Etheruby will be a classy-way to call Ethereum smart contracts with ease from any Ruby applications. This is still a work in progress.
 
 My final goal is to have the possibility to describe a smart-contract this way :
@@ -28,7 +30,12 @@ puts "Citizen.multiple(4,5)"
 resp = Citizen.multiple(4,5)
 ```
 
-A big part of what remains to implement is the argument encoding/decoding :
-https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
+### What remains to do ?
 
-I you want to contribute, you're welcome !
+ - A big part of what remains to implement is the argument encoding/decoding : https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
+ - Tests, using RSpec
+ - Maybe review how Etheruby::Contract works for inheritence (it is a bit dirty right now)
+
+### Contribute !
+
+I you want to contribute, you're welcome ! Do a pull request, etc...

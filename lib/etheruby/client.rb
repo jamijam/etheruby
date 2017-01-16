@@ -8,7 +8,8 @@ module Etheruby
     def self.uri=(_uri)
       @@uri = URI.parse(_uri)
     end
-    def method_missing(sym)
+    def self.method_missing(sym)
+      @@uri ||= URI.parse('http://localhost:8545/')
       ClientHolder.new(@@uri,sym)
     end
   end
