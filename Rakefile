@@ -15,5 +15,5 @@ RSpec::Core::RakeTask.new('unit') do |t|
   ]
 end
 
-task default: [:spec, :build]
+task default: [:unit, :build]
 task test: :spec
