@@ -104,7 +104,7 @@ module Etheruby
     ##
     # byte<X> encodeing
     def byte_encode(size, arg)
-      arg.map{ |b| b.to_s(16) }.join.rjust(size,'0')
+      arg.map{ |b| b.to_s(16).rjust(2,'0') }.join.rjust(size,'0')
     end
 
     ##
@@ -122,7 +122,7 @@ module Etheruby
     ##
     # bytes (dynamic size) encoding
     def bytes_encode(arg)
-      uint_encode(256, arg.count) + arg.map{ |b| b.to_s(16) }.join
+      uint_encode(256, arg.count) + arg.map{ |b| b.to_s(16).rjust(2,'0') }.join
     end
 
     ##
