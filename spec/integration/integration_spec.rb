@@ -14,8 +14,6 @@ describe 'integration test' do
         gas_price 10000
       end
     end
-    Citizen.greet
-    Citizen.multiple(4,5)
   end
 
 end
