@@ -1,5 +1,3 @@
-require_relative '../lib/etheruby'
-
 require 'simplecov'
 SimpleCov.start
 
