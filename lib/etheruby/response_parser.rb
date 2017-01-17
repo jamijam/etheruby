@@ -70,16 +70,35 @@ module Etheruby
       return arg[0..(size/4)-1].to_i(16), arg[(size/4)..arg.length]
     end
 
+    def decimal_representation(size, part)
+      value = 0.0
+      exp = -1
+      bin_rpr = part.to_i(16).to_s(2).rjust(size,'0')
+      bin_rpr.split("").each do |bit|
+        value += 2**exp if bit == '1'
+        exp -= 1
+      end
+      value
+    end
+
     ##
     # ufixed<X> decoding
     def ufixed_decode(size_i, size_d, arg)
-
+      int_part, arg = uint_decode(size_i, arg)
+      dec_part = decimal_representation(size_d, arg[0..(size_d / 4)-1])
+      return dec_part + int_part, arg[(size_d / 4)..arg.length]
     end
 
     ##
     # fixed<X> decoding
     def fixed_decode(size_i, size_d, arg)
-      
+      int_part, arg = int_decode(size_i, arg)
+      dec_part = decimal_representation(size_d, arg[0..(size_d / 4)-1])
+      if int_part >= 0
+        return dec_part + int_part, arg[(size_d / 4)..arg.length]
+      else
+        return -(dec_part + int_part.abs), arg[(size_d / 4)..arg.length]
+      end
     end
 
     ##

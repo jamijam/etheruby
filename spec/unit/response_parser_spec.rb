@@ -59,4 +59,25 @@ describe Etheruby::ResponseParser do
     expect(described_class.new(['uint8[][]'],data).parse).to eq([[87, 235], [30, 100]])
   end
 
+  it 'parses fixed numbers' do
+
+  end
+
+  it 'parses ufixed numbers' do
+    data = '005c28f5c28f5c28f5c28f'
+    expect(described_class.new(['ufixed8x80'],data).parse).to eq(BigDecimal('0.36'))
+    data = '0f570a3d70a3d70a3d70a3'
+    expect(described_class.new(['ufixed8x80'],data).parse).to eq(BigDecimal('15.34'))
+    expect(described_class.new(['ufixed8x8'],'0120').parse).to eq(BigDecimal('1.125'))
+    expect(described_class.new(['ufixed8x8'],'0140').parse).to eq(BigDecimal('1.25'))
+    expect(described_class.new(['ufixed8x8'],'0180').parse).to eq(BigDecimal('1.5'))
+    expect(described_class.new(['ufixed8x8'],'01c0').parse).to eq(BigDecimal('1.75'))
+    expect(described_class.new(['ufixed8x8'],'01d0').parse).to eq(BigDecimal('1.8125'))
+  end
+
+  it 'parses ufixed numbers' do
+    expect(described_class.new(['fixed8x8'],'ff40').parse).to eq(BigDecimal('-1.25'))
+    expect(described_class.new(['fixed8x8'],'ff20').parse).to eq(BigDecimal('-1.125'))
+  end
+
 end
