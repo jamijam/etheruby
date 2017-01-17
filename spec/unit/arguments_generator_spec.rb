@@ -16,9 +16,9 @@ describe Etheruby::ArgumentsGenerator do
       expect(s.to_s).to eq(repr)
     end
 
-    xit 'works on case 3' do
-      s = described_class.new([:ufixed8x8,:uint8],[1.25, 42])
-      repr = '01042a'
+    it 'works on case 3' do
+      s = described_class.new([:ufixed8x8,:uint8],[BigDecimal('1.25'), 42])
+      repr = '01402a'
       expect(s.to_s).to eq(repr)
     end
 
@@ -27,12 +27,18 @@ describe Etheruby::ArgumentsGenerator do
   context 'encoders' do
     let(:subject){ described_class.new([],[]) }
 
-    xit 'encodes ufixed<M> into hexadecimal base' do
-      expect(subject.ufixed_encode(8,8,1.25)).to eq('0104')
+    it 'encodes ufixed<M> into hexadecimal base' do
+      expect(subject.ufixed_encode(8,8,BigDecimal('1.125'))).to eq('0120')
+      expect(subject.ufixed_encode(8,8,BigDecimal('1.25'))).to eq('0140')
+      expect(subject.ufixed_encode(8,8,BigDecimal('1.5'))).to eq('0180')
+      expect(subject.ufixed_encode(8,8,BigDecimal('1.75'))).to eq('01c0')
+      expect(subject.ufixed_encode(8,8,BigDecimal('1.8125'))).to eq('01d0')
+      expect(subject.ufixed_encode(8,80,BigDecimal('0.36'))).to eq('005c28f5c28f5c28f5c28f')
+      expect(subject.ufixed_encode(8,80,BigDecimal('15.34'))).to eq('0f570a3d70a3d70a3d70a3')
     end
 
-    xit 'encodes fixed<M> into hexadecimal base' do
-      expect(subject.fixed_encode(8,8,-1.25)).to eq('ff04')
+    it 'encodes fixed<M> into hexadecimal base' do
+      expect(subject.fixed_encode(8,8,BigDecimal('-1.25'))).to eq('ff40')
     end
 
     it 'encodes dynamically-sized array' do

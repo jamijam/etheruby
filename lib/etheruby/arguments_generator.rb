@@ -1,3 +1,5 @@
+require 'bigdecimal'
+
 module Etheruby
 
   class IncorrectTypeError < StandardError; end
@@ -72,21 +74,7 @@ module Etheruby
     # uint<X> encoding
     def uint_encode(size, arg)
       raise InvalidFormatForDataError.new("unsigned integer #{arg} < 0") if arg < 0
-      int_encode(size,arg)
-    end
-
-    ##
-    # fixed<X>
-    def fixed_encode(size_i, size_d, arg)
-      int_part, dec_part = arg.to_i, arg - arg.to_i
-      int_encode(size_i, int_part) + decimal_representation(size_d, dec_part)
-    end
-
-    ##
-    # Represent the decimal part in hexadimal according to the precision
-    def decimal_representation(precision, value)
-      ""
-      # ToDo : Check how to do this ?
+      int_encode(size, arg)
     end
 
     ##
@@ -94,6 +82,30 @@ module Etheruby
     def ufixed_encode(size_i, size_d, arg)
       raise InvalidFormatForDataError.new("unsigned fixed #{arg} < 0") if arg < 0
       fixed_encode(size_i, size_d, arg)
+    end
+
+    ##
+    # fixed<X>
+    def fixed_encode(size_i, size_d, arg)
+      raise InvalidFormatForDataError.new("Please use BigDecimal !") unless arg.is_a? BigDecimal
+      if arg >= 0
+        int_part, dec_part = arg.to_i, arg - arg.to_i
+      else
+        int_part, dec_part = arg.to_i, (arg + arg.to_i.abs).abs
+      end
+      int_encode(size_i, int_part) + \
+      decimal_representation(size_d, dec_part)
+    end
+
+    ##
+    # Represent the decimal part in hexadimal according to the precision
+    def decimal_representation(precision, value)
+      (0..precision-1).map {
+        int_part, value = (value*2).to_i, (value*2) - (value*2).to_i
+        int_part
+      }.each_slice(8).map { |slice|
+        slice.join.to_i(2).to_s(16).rjust(2,'0')
+      }.join
     end
 
     ##
