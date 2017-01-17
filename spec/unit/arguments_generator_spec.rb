@@ -43,7 +43,7 @@ describe Etheruby::ArgumentsGenerator do
 
     it 'encodes dynamically-sized array' do
       repr = '0000000000000000000000000000000000000000000000000000000000000003050607'
-      expect(subject.dynamic_array(:uint8,[5,6,7])).to eq(repr)
+      expect(subject.dynamic_array_encode(:uint8,[5,6,7])).to eq(repr)
     end
 
     it 'encodes int<M> into hexadecimal base' do
@@ -75,46 +75,6 @@ describe Etheruby::ArgumentsGenerator do
 
     it 'encodes addresses into hexadecimal base' do
       expect(subject.address_encode(0x57eb1e64d972d9937c6f6f07a865e91608252c97)).to eq('57eb1e64d972d9937c6f6f07a865e91608252c97')
-    end
-
-  end
-
-  context 'matchers' do
-    let(:subject){ described_class.new([],[]) }
-
-    it 'matches sized types' do
-      match = subject.is_sized_type(:uint256)
-      expect(match[1]).to eq('uint')
-      expect(match[2]).to eq('256')
-    end
-
-    it 'matches statically-sized array' do
-      match = subject.is_static_array_type('uint256[4]')
-      expect(match[1]).to eq('uint256')
-      expect(match[2]).to eq('4')
-    end
-
-    it 'matches dynamicaly-sized array' do
-      match = subject.is_dynamic_array_type('uint256[]')
-      expect(match[1]).to eq('uint256')
-    end
-
-    it 'matches statically-sized array of n dimension' do
-      match = subject.is_static_array_type('uint256[4][3]')
-      expect(match[1]).to eq('uint256[4]')
-      expect(match[2]).to eq('3')
-    end
-
-    it 'matches dynamicaly-sized array of n dimension' do
-      match = subject.is_dynamic_array_type('uint256[][]')
-      expect(match[1]).to eq('uint256[]')
-    end
-
-    it 'mathes dual-sized types' do
-      match = subject.is_dualsized_type('ufloat8x16')
-      expect(match[1]).to eq('ufloat')
-      expect(match[2]).to eq('8')
-      expect(match[3]).to eq('16')
     end
 
   end

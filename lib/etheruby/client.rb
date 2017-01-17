@@ -20,7 +20,7 @@ module Etheruby
       @sym = sym
     end
     def method_missing(sym, *data)
-      body = { 'id' => 'jsonrpc', 'method' => "#{@sym}_#{sym}", 'params' => data }
+      body = { 'id' => '1', 'method' => "#{@sym}_#{sym}", 'params' => data }
       text_response = http_post_request(::MultiJson.dump(body))
       ::MultiJson.load(text_response)
     end

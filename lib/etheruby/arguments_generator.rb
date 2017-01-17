@@ -1,4 +1,5 @@
 require 'bigdecimal'
+require_relative 'type_matchers'
 
 module Etheruby
 
@@ -15,46 +16,32 @@ module Etheruby
       @args = args
     end
 
-    def is_sized_type(param)
-      param.to_s.match /^([a-z]+)(\d+)$/
-    end
-
-    def is_dualsized_type(param)
-      param.to_s.match /^(.+)(\d+)x(\d+)$/
-    end
-
-    def is_static_array_type(param)
-      param.to_s.match(/^(.+)\[(\d+)\]$/)
-    end
-
-    def is_dynamic_array_type(param)
-      param.to_s.match(/^(.+)\[\]$/)
-    end
-
     def treat_variable(param, arg)
-      if match = is_sized_type(param)
+      if match = TypeMatchers.is_sized_type(param)
         # Parameter is a sized type, e.g. uint256, byte32 ...
         send("#{match[1]}_encode".to_sym, match[2].to_i, arg)
-      elsif match = is_dualsized_type(param)
+
+      elsif match = TypeMatchers.is_dualsized_type(param)
         # Parameter is a dual sized array type, e.g. fixed16x16
         send("#{match[1]}_encode".to_sym, match[2].to_i, match[3].to_i, arg)
-      elsif match = is_static_array_type(param)
+
+      elsif match = TypeMatchers.is_static_array_type(param)
         # Parameter is a staticly sized array type, e.g. uint256[24]
-        static_array(match[1], match[2].to_i, arg)
-      elsif match = is_dynamic_array_type(param)
+        static_array_encode(match[1], match[2].to_i, arg)
+
+      elsif match = TypeMatchers.is_dynamic_array_type(param)
         # Parameter is a dynamicaly sized array type, e.g. uint256[]
-        dynamic_array(match[1], arg)
+        dynamic_array_encode(match[1], arg)
+
       else
         # Parameter is a single-word type : string, bytes, address etc...
         send("#{param}_encode".to_sym, arg)
+
       end
     end
 
     def to_s
       raise ArgumentsCountError.new unless params.count == args.count
-      # For each parameter of the method called, we
-      # match the corresponding type to encode and we send the
-      # parameter given to this encoder
       (0..params.count-1).map { |i| treat_variable(params[i], args[i]) }.join
     end
 
@@ -84,7 +71,7 @@ module Etheruby
     end
 
     ##
-    # fixed<X>
+    # fixed<X> encoding
     def fixed_encode(size_i, size_d, arg)
       raise InvalidFormatForDataError.new("Please use BigDecimal !") unless arg.is_a? BigDecimal
       if arg >= 0
@@ -109,7 +96,7 @@ module Etheruby
 
     ##
     # Encode a static array
-    def static_array(type, size, arg)
+    def static_array_encode(type, size, arg)
       raise InvalidFormatForDataError.new(
         "Array have #{arg.count} items for #{size} sized variable"
       ) unless arg.count == size
@@ -118,8 +105,8 @@ module Etheruby
 
     ##
     # Creates a dynamic array
-    def dynamic_array(type, arg)
-      uint_encode(256, arg.count) + static_array(type, arg.count, arg)
+    def dynamic_array_encode(type, arg)
+      uint_encode(256, arg.count) + static_array_encode(type, arg.count, arg)
     end
 
     ##
