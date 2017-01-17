@@ -6,7 +6,6 @@ module Etheruby
   class ArgumentsCountError < StandardError; end
   class InvalidFormatForDataError < StandardError; end
 
-  # https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
   class ArgumentsGenerator
 
     attr_reader :params, :args

@@ -3,6 +3,7 @@ require 'logger'
 require_relative 'etheruby/client'
 require_relative 'etheruby/contract_method_dsl'
 require_relative 'etheruby/arguments_generator'
+require_relative 'etheruby/response_parser'
 
 module Etheruby
   class NoContractMethodError < StandardError; end
@@ -52,7 +53,11 @@ module Etheruby
         else
           @@logger.debug("Response from API for #{method_info[:name]} : #{response.inspect}")
         end
-        response['result']
+        if method_info.has_key? :returns
+          ResponseParser.new(method_info[:returns], response['result']).parse
+        else
+          response['result']
+        end
       end
 
       def self.address
