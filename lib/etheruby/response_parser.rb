@@ -4,46 +4,40 @@ module Etheruby
 
   class ResponseParser
 
-    attr_reader :returns, :response
-
-    def initialize(returns, response)
-      @returns = returns
-      @response = response
+    def initialize(_returns, _response)
+      @returns = _returns
+      @response = _response
     end
 
-    def treat_variable(param, arg)
+    def treat_variable(param)
       if match = TypeMatchers.is_sized_type(param)
         # Parameter is a sized type, e.g. uint256, byte32 ...
-        send("#{match[1]}_decode".to_sym, match[2].to_i, arg)
+        send("#{match[1]}_decode".to_sym, match[2].to_i)
 
       elsif match = TypeMatchers.is_dualsized_type(param)
         # Parameter is a dual sized array type, e.g. fixed16x16
-        send("#{match[1]}_decode".to_sym, match[2].to_i, match[3].to_i, arg)
+        send("#{match[1]}_decode".to_sym, match[2].to_i, match[3].to_i)
 
       elsif match = TypeMatchers.is_static_array_type(param)
         # Parameter is a staticly sized array type, e.g. uint256[24]
-        static_array_decode(match[1], match[2].to_i, arg)
+        static_array_decode(match[1], match[2].to_i)
 
       elsif match = TypeMatchers.is_dynamic_array_type(param)
         # Parameter is a dynamicaly sized array type, e.g. uint256[]
-        dynamic_array_decode(match[1], arg)
+        dynamic_array_decode(match[1])
 
       else
         # Parameter is a single-word type : string, bytes, address etc...
-        send("#{param}_decode".to_sym, arg)
+        send("#{param}_decode".to_sym)
 
       end
     end
 
     def parse
-      if returns.count == 1
-        value, response = treat_variable(returns[1], response)
-        return value
+      if @returns.count == 1
+        treat_variable(@returns[0])
       else
-        returns.map do |type|
-          value, response = treat_variable(type, response)
-          value
-        end
+        @returns.map { |type| treat_variable(type) }
       end
     end
 
@@ -54,58 +48,63 @@ module Etheruby
 
     ##
     # int<X> decoding
-    def int_decode(size, arg)
+    def int_decode(size)
     end
 
     ##
     # uint<X> decoding
-    def uint_decode(size, arg)
+    def uint_decode(size)
+      v, @response = @response[0..(size/4)].to_i(16), 
+                     @response[(size/4)..@response.length]
+      v
     end
 
     ##
     # ufixed<X> decoding
-    def ufixed_decode(size_i, size_d, arg)
+    def ufixed_decode(size_i, size_d)
     end
 
     ##
     # fixed<X> decoding
-    def fixed_decode(size_i, size_d, arg)
+    def fixed_decode(size_i, size_d)
     end
 
     ##
     # Decodes a static array
-    def static_array_decode(type, size, arg)
+    def static_array_decode(type, size)
     end
 
     ##
     # Decodes a dynamic array
-    def dynamic_array_decode(type, arg)
+    def dynamic_array_decode(type)
     end
 
     ##
     # byte<X> decoding
-    def byte_decode(size, arg)
+    def byte_decode(size)
     end
 
     ##
     # address<X> decoding
-    def address_decode(arg)
+    def address_decode
     end
 
     ##
     # string<x> decoding (as bytes)
-    def string_decode(arg)
+    def string_decode
     end
 
     ##
     # bytes (dynamic size) decoding
-    def bytes_decode(arg)
+    def bytes_decode
     end
 
     ##
     # boolean decoding (as uint8)
-    def bool_decode(arg)
+    def bool_decode
+      uint_decode(8) == 1
     end
+
   end
 
 end

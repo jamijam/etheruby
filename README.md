@@ -1,8 +1,8 @@
 # Etheruby
 
-**This is a work in progress !**
+Etheruby is a library including a client for the JSON-RPC API and a Object-Contract Mapper to interact with smart-contracts.
 
-Etheruby will be a classy-way to call Ethereum smart contracts with ease from any Ruby applications. This is still a work in progress.
+**This is a work in progress !**
 
 My final goal is to have the possibility to describe a smart-contract this way :
 

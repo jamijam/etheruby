@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version = '0.0.2'
   s.date = '2017-01-16'
   s.summary = 'Etheruby : Ethereum smart-contract classy-describer for Ruby.'
-  s.description = 'Describe ethereum smart-contract and execute them with ease.'
+  s.description = 'Etheruby is a library including a client for the JSON-RPC API and a Object-Contract Mapper to interact with smart-contracts.'
   s.authors = ['Jérémy SEBAN']
   s.email = 'jeremy@seban.eu'
   s.files = Dir['lib/**/*']
