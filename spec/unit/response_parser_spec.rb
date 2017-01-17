@@ -50,4 +50,13 @@ describe Etheruby::ResponseParser do
     expect(described_class.new(['uint8[]'],data).parse).to eq([87, 235, 30, 100])
   end
 
+  it 'parses dynamic nested arrays' do
+    data =  '0000000000000000000000000000000000000000000000000000000000000002'
+    data += '0000000000000000000000000000000000000000000000000000000000000002'
+    data += '57eb'
+    data += '0000000000000000000000000000000000000000000000000000000000000002'
+    data += '1e64'
+    expect(described_class.new(['uint8[][]'],data).parse).to eq([[87, 235], [30, 100]])
+  end
+
 end

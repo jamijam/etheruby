@@ -79,7 +79,7 @@ module Etheruby
     ##
     # fixed<X> decoding
     def fixed_decode(size_i, size_d, arg)
-
+      
     end
 
     ##

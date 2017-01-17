@@ -22,6 +22,15 @@ describe Etheruby::ArgumentsGenerator do
       expect(s.to_s).to eq(repr)
     end
 
+    it 'works on case 4' do
+      data =  '0000000000000000000000000000000000000000000000000000000000000002'
+      data += '0000000000000000000000000000000000000000000000000000000000000002'
+      data += '57eb'
+      data += '0000000000000000000000000000000000000000000000000000000000000002'
+      data += '1e64'
+      s = described_class.new(['uint8[][]'],[[[87, 235], [30, 100]]])
+      expect(s.to_s).to eq(data)
+    end
   end
 
   context 'encoders' do
