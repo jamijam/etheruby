@@ -9,7 +9,8 @@ module Etheruby::Encoders
     end
 
     def decode
-      Bytes.new(data).decode.pack('U*')
+      v, s = Bytes.new(data).decode
+      return v.pack('U*'), s
     end
   end
 

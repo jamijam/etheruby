@@ -48,12 +48,13 @@ module Etheruby::Encoders
     end
 
     def decode
-      int_part = Int.new(data[0..(size_i/4)-1]).decode
+      @data = data[0..63]
+      int_part = Int.new(data[0..(size_i/4)-1]).decode[0]
       dec_part = decode_decimal_representation(data[(size_i / 4)..data.length])
       if int_part >= 0
-        dec_part + int_part
+        return (dec_part + int_part), 32
       else
-        -(dec_part + int_part.abs)
+        return -(dec_part + int_part.abs), 32
       end
     end
 
@@ -67,8 +68,9 @@ module Etheruby::Encoders
     end
 
     def decode
-      Uint.new(data[0..(size_i/4)-1]).decode +
-        decode_decimal_representation(data[(size_i / 4)..data.length])
+      @data = data[0..63]
+      return Uint.new(data[0..(size_i/4)-1]).decode[0] +
+        decode_decimal_representation(data[(size_i / 4)..data.length]), 32
     end
 
   end

@@ -9,7 +9,7 @@ describe Etheruby::Encoders::Byte do
   it 'decodes correctly' do
     data = '68656c6c6f21'.ljust(64,'0')
     parsed_data = [104, 101, 108, 108, 111, 33]
-    expect(described_class.new(6,data).decode).to eq(parsed_data)
+    expect(described_class.new(6,data).decode[0]).to eq(parsed_data)
   end
 
 end
@@ -24,7 +24,7 @@ describe Etheruby::Encoders::Bytes do
   it 'decodes correctly' do
     data = '6'.rjust(64,'0') + '68656c6c6f21'.ljust(64,'0')
     parsed_data = [104, 101, 108, 108, 111, 33]
-    expect(described_class.new(data).decode).to eq(parsed_data)
+    expect(described_class.new(data).decode[0]).to eq(parsed_data)
   end
 
 end

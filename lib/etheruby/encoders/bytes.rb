@@ -19,7 +19,8 @@ module Etheruby::Encoders
     end
 
     def decode
-      data[0..(size*2)-1].split('').each_slice(2).map{ |b| b.join.to_i(16) }
+      return data[0..(size*2)-1].split('').each_slice(2).map{ |b| b.join.to_i(16) },
+             determinate_closest_padding(size)
     end
 
   end
@@ -31,8 +32,8 @@ module Etheruby::Encoders
     end
 
     def decode
-      size = Uint.new(data[0..63]).decode
-      Byte.new(size,data[64..data.length]).decode
+      size = Uint.new(data[0..63]).decode[0]
+      return Byte.new(size,data[64..data.length]).decode[0], determinate_closest_padding(size+32)
     end
 
   end

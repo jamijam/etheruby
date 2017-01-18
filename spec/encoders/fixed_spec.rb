@@ -10,8 +10,8 @@ describe Etheruby::Encoders::Fixed do
   end
 
   it 'decodes correctly' do
-    expect(described_class.new(128,128,uf128x128('ff','40')).decode).to eq(-1.25)
-    expect(described_class.new(128,128,f128x128('01','20')).decode).to eq(BigDecimal('1.125'))
+    expect(described_class.new(128,128,uf128x128('ff','40')).decode[0]).to eq(-1.25)
+    expect(described_class.new(128,128,f128x128('01','20')).decode[0]).to eq(BigDecimal('1.125'))
   end
 
 end
@@ -29,9 +29,9 @@ describe Etheruby::Encoders::Ufixed do
   end
 
   it 'decodes correctly' do
-    expect(described_class.new(8,248,'00' + ('5c28f'*14)[0..61]).decode).to eq(BigDecimal('0.36'))
-    expect(described_class.new(8,248,'0f5' + ('70a3d'*14)[0..60]).decode).to eq(BigDecimal('15.34'))
-    expect(described_class.new(128,128,f128x128('01','20')).decode).to eq(BigDecimal('1.125'))
+    expect(described_class.new(8,248,'00' + ('5c28f'*14)[0..61]).decode[0]).to eq(BigDecimal('0.36'))
+    expect(described_class.new(8,248,'0f5' + ('70a3d'*14)[0..60]).decode[0]).to eq(BigDecimal('15.34'))
+    expect(described_class.new(128,128,f128x128('01','20')).decode[0]).to eq(BigDecimal('1.125'))
   end
 
 end

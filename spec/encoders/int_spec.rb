@@ -9,9 +9,9 @@ describe Etheruby::Encoders::Int do
   end
 
   it 'decodes correctly' do
-    expect(described_class.new('03'.rjust(64,'0')).decode).to eq(3)
-    expect(described_class.new('fd'.rjust(64,'f')).decode).to eq(-3)
-    expect(described_class.new('f2'.rjust(64,'f')).decode).to eq(-14)
+    expect(described_class.new('03'.rjust(64,'0')).decode).to eq([3,32])
+    expect(described_class.new('fd'.rjust(64,'f')).decode).to eq([-3,32])
+    expect(described_class.new('f2'.rjust(64,'f')).decode).to eq([-14,32])
   end
 
 end
@@ -24,9 +24,9 @@ describe Etheruby::Encoders::Uint do
   end
 
   it 'decodes correctly' do
-    expect(described_class.new('0f'.rjust(64, '0')).decode).to eq(15)
-    expect(described_class.new('10'.rjust(64, '0')).decode).to eq(16)
-    expect(described_class.new('1010'.rjust(64, '0')).decode).to eq(4112)
+    expect(described_class.new('0f'.rjust(64, '0')).decode).to eq([15,32])
+    expect(described_class.new('10'.rjust(64, '0')).decode).to eq([16,32])
+    expect(described_class.new('1010'.rjust(64, '0')).decode).to eq([4112,32])
   end
 
 end

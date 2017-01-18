@@ -14,12 +14,12 @@ module Etheruby::Encoders
     end
 
     def decode
-      in_int = data.to_i(16)
+      in_int = data[0..63].to_i(16)
       in_bin = in_int.to_s(2).rjust(64, '0')
       if in_bin[0] == '1'
-        -(in_bin.split("").map{ |i| i == '1' ? '0' : '1' }.join.to_i(2) + 1)
+        return -(in_bin.split("").map{ |i| i == '1' ? '0' : '1' }.join.to_i(2) + 1), 32
       else
-        in_int
+        return in_int, 32
       end
     end
 
@@ -33,7 +33,7 @@ module Etheruby::Encoders
     end
 
     def decode
-      data.to_i(16)
+      return data[0..63].to_i(16), 32
     end
 
   end

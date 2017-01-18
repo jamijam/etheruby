@@ -9,7 +9,8 @@ module Etheruby::Encoders
     end
 
     def decode
-      "0x#{Uint.new(data).decode.to_s(16)}"
+      v, s = Uint.new(data).decode
+      return "0x#{v.to_s(16)}", s
     end
   end
 
