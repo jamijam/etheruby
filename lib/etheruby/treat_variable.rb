@@ -9,6 +9,25 @@ require_relative 'type_matchers'
 
 module Etheruby
 
+  def is_static_type?(param)
+    if match = TypeMatchers.is_sized_type(param)
+      # Parameter is a sized type, e.g. uint256, byte32 ...
+      true
+    elsif match = TypeMatchers.is_dualsized_type(param)
+      # Parameter is a dual sized array type, e.g. fixed16x16, ufixed128x128
+      true
+    elsif match = TypeMatchers.is_static_array_type(param)
+      # Parameter is a staticly sized array type, e.g. uint256[24]
+      true
+    elsif match = TypeMatchers.is_dynamic_array_type(param)
+      # Parameter is a dynamicaly sized array type, e.g. uint256[]
+      false
+    else
+      # Parameter is a single-word type : string, bytes, address etc...
+      %w(string bytes).include? param
+    end
+  end
+
   def treat_variable(param, arg, direction)
     if match = TypeMatchers.is_sized_type(param)
       # Parameter is a sized type, e.g. uint256, byte32 ...
@@ -40,5 +59,5 @@ module Etheruby
     end
   end
 
-  module_function :treat_variable
+  module_function :treat_variable, :is_static_type?
 end

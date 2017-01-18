@@ -2,14 +2,6 @@ require 'bigdecimal'
 
 require_relative '../../lib/etheruby/encoders/fixed'
 
-def uf128x128(a,b)
-  a.rjust(32, 'f') + b.ljust(32, '0')
-end
-
-def f128x128(a,b)
-  a.rjust(32, '0') + b.ljust(32, '0')
-end
-
 describe Etheruby::Encoders::Fixed do
 
   it 'encodes correctly' do

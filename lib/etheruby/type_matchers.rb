@@ -7,7 +7,7 @@ module Etheruby
     end
 
     def is_dualsized_type(param)
-      param.to_s.match /^(.+)(\d+)x(\d+)$/
+      param.to_s.match /^([a-z]+)(\d+)x(\d+)$/
     end
 
     def is_static_array_type(param)

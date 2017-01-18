@@ -35,6 +35,11 @@ describe Etheruby::TypeMatchers do
       expect(match[1]).to eq('ufloat')
       expect(match[2]).to eq('8')
       expect(match[3]).to eq('16')
+
+      match = subject.is_dualsized_type('ufloat128x128')
+      expect(match[1]).to eq('ufloat')
+      expect(match[2]).to eq('128')
+      expect(match[3]).to eq('128')
     end
 
 end

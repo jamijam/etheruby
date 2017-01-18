@@ -15,3 +15,11 @@ RSpec.configure do |config|
   end
   config.shared_context_metadata_behavior = :apply_to_host_groups
 end
+
+def uf128x128(a,b)
+  a.rjust(32, 'f') + b.ljust(32, '0')
+end
+
+def f128x128(a,b)
+  a.rjust(32, '0') + b.ljust(32, '0')
+end

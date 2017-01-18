@@ -15,11 +15,22 @@ module Etheruby::Encoders
     end
 
     def encode
-      data.map { |item| treat_variable(type, item, :encode) }.join
+      if Etheruby::is_static_type? type
+        data.map { |d| Etheruby::treat_variable(type, d, :encode) }.join
+      else
+
+      end
     end
 
     def decode
+      values = []
+      if Etheruby::is_static_type? type
+        (0..(64*size)-1).step(64).map { |d|
+          Etheruby::treat_variable(type, data[d..d+63], :decode)
+        }
+      else
 
+      end
     end
 
   end
@@ -39,7 +50,8 @@ module Etheruby::Encoders
     end
 
     def decode
-
+      size = Uint.new(data[0..63]).decode
+      StaticArray.new(type, size, data[64..data.length]).decode
     end
 
   end
