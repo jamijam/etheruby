@@ -1,5 +1,7 @@
 require 'bigdecimal'
 require_relative 'type_matchers'
+require_relative 'treat_variable'
+require_relative 'encoders/int'
 
 module Etheruby
 
@@ -16,10 +18,21 @@ module Etheruby
 
     def to_s
       raise ArgumentsCountError.new("Bad number of arguments") unless args.count == params.count
-      (0..params.count-1).map { |i|
+      head = ''
+      tail = ''
+      current_tail_position = (params.count*32)
+      (0..params.count-1).each do |i|
         param, arg = params[i], args[i]
-        Etheruby::treat_variable(param, arg, :encode)
-      }.join
+        if Etheruby.is_static_type? param
+          head += Etheruby.treat_variable(param, arg, :encode).to_s
+        else
+          head += Etheruby::Encoders::Uint.new(current_tail_position).encode
+          content = Etheruby.treat_variable(param, arg, :encode).to_s
+          current_tail_position += content.length/2
+          tail += content
+        end
+      end
+      return head + tail
     end
 
   end

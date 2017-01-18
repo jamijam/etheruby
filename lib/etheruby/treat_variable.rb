@@ -10,8 +10,7 @@ require_relative 'type_matchers'
 module Etheruby
 
   def is_static_type?(param)
-    TypeMatchers.is_sized_type(param) || TypeMatchers.is_dualsized_type(param) ||
-    TypeMatchers.is_static_array_type(param) || (not %w(string bytes).include?(param))
+    !(%w(string bytes).include?(param.to_s) || TypeMatchers.is_dynamic_array_type(param))
   end
 
   def is_array?(param)

@@ -47,7 +47,7 @@ module Etheruby
           composed_body[kw] = method_info[kw] if method_info.has_key? kw
         }
         @@logger.debug("Calling #{method_info[:name]} with parameters #{composed_body.inspect}")
-        response = Client.eth.call composed_body, "latest"
+        response = call_api composed_body
         if response.has_key? 'error'
           @@logger.error("Failed contract execution #{response['error']['message']}")
         else
@@ -58,6 +58,10 @@ module Etheruby
         else
           response['result']
         end
+      end
+
+      def self.call_api(composed_body)
+        Client.eth.call composed_body, "latest"
       end
 
       def self.address

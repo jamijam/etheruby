@@ -8,12 +8,12 @@ module Etheruby
 
     def initialize(_returns, _response)
       @returns = _returns
-      @response = _response
+      @response = _response[2.._response.length]
     end
 
     def parse
       if returns.count == 1
-        Etheruby::treat_variable(returns[0], response)
+        Etheruby::treat_variable(returns[0], response, :decode)
       else
         returns.each do |type|
           
