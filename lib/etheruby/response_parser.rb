@@ -34,71 +34,7 @@ module Etheruby
     end
 
     def parse
-      if @returns.count == 1
-        treat_variable(@returns[0], @response)[0]
-      else
-        @returns.map { |type|
-          value, @response = treat_variable(type, @response)
-          value
-        }
-      end
-    end
-
-    # Each decode method will receive in parameters the response string remaining
-    # to parse. It will extract the type of the response considering it as the
-    # first thing in the string and returns the string without it. Doing this,
-    # method calls will be chainable easily.
-
-    ##
-    # int<X> decoding
-    def int_decode(size, arg)
-      to_parse = arg[0..(size/4)-1]
-      arg = arg[(size/4)..@response.length]
-      in_int = to_parse.to_i(16)
-      in_bin = in_int.to_s(2).rjust(size, '0')
-      value = if in_bin[0] == '1'
-        -(in_bin.split("").map{ |i| i == '1' ? '0' : '1' }.join.to_i(2) + 1)
-      else
-        to_parse.to_i(16)
-      end
-      return value, arg
-    end
-
-    ##
-    # uint<X> decoding
-    def uint_decode(size, arg)
-      return arg[0..(size/4)-1].to_i(16), arg[(size/4)..arg.length]
-    end
-
-    def decimal_representation(size, part)
-      value = 0.0
-      exp = -1
-      bin_rpr = part.to_i(16).to_s(2).rjust(size,'0')
-      bin_rpr.split("").each do |bit|
-        value += 2**exp if bit == '1'
-        exp -= 1
-      end
-      value
-    end
-
-    ##
-    # ufixed<X> decoding
-    def ufixed_decode(size_i, size_d, arg)
-      int_part, arg = uint_decode(size_i, arg)
-      dec_part = decimal_representation(size_d, arg[0..(size_d / 4)-1])
-      return dec_part + int_part, arg[(size_d / 4)..arg.length]
-    end
-
-    ##
-    # fixed<X> decoding
-    def fixed_decode(size_i, size_d, arg)
-      int_part, arg = int_decode(size_i, arg)
-      dec_part = decimal_representation(size_d, arg[0..(size_d / 4)-1])
-      if int_part >= 0
-        return dec_part + int_part, arg[(size_d / 4)..arg.length]
-      else
-        return -(dec_part + int_part.abs), arg[(size_d / 4)..arg.length]
-      end
+      #
     end
 
     ##
@@ -117,42 +53,6 @@ module Etheruby
       return static_array_decode(type, size, arg)
     end
 
-    ##
-    # byte<X> decoding
-    def byte_decode(size, arg)
-      return (0..size-1).map { |i|
-        value = arg[0..1].to_i(16)
-        arg = arg[2..arg.length]
-        value
-      }, arg
-    end
-
-    ##
-    # address<X> decoding
-    def address_decode(arg)
-      return "0x#{arg[0..39]}", arg[40..arg.length]
-    end
-
-    ##
-    # string<x> decoding (as bytes)
-    def string_decode(arg)
-      value, arg = bytes_decode(arg)
-      return value.pack('U*'), arg
-    end
-
-    ##
-    # bytes (dynamic size) decoding
-    def bytes_decode(arg)
-      size, arg = uint_decode(256, arg)
-      return byte_decode(size, arg)
-    end
-
-    ##
-    # boolean decoding (as uint8)
-    def bool_decode(arg)
-      value, arg = uint_decode(8, arg)
-      return value == 1, arg
-    end
 
   end
 

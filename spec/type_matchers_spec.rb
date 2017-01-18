@@ -1,7 +1,7 @@
-require_relative '../../lib/etheruby/type_matchers'
+require_relative '../lib/etheruby/type_matchers'
 
 describe Etheruby::TypeMatchers do
-  
+
     it 'matches sized types' do
       match = subject.is_sized_type(:uint256)
       expect(match[1]).to eq('uint')

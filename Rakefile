@@ -3,17 +3,11 @@ require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new
 
-RSpec::Core::RakeTask.new('integration') do |t|
+RSpec::Core::RakeTask.new('encoders') do |t|
   t.pattern = [
-    'spec/integration/*.rb'
+    'spec/encoders/*.rb'
   ]
 end
 
-RSpec::Core::RakeTask.new('unit') do |t|
-  t.pattern = [
-    'spec/unit/*.rb'
-  ]
-end
-
-task default: [:unit, :build]
+task default: [:spec, :build]
 task test: :spec
