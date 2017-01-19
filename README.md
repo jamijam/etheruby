@@ -10,6 +10,8 @@
 
 Etheruby is a library including a client for the JSON-RPC API and a Object-Contract Mapper to interact with smart-contracts on the Ethereum blockchain.
 
+**Current status** : Release candidate 1. If no major bug is found within this release, it will be promoted version 1.0.0 stable.
+
 ## Installation
 
 `gem install etheruby`
@@ -21,6 +23,16 @@ gem 'etheruby'
 ```
 
 And then run `bundle install`.
+
+### Usage with Ruby on Rails
+
+You can use Etheruby from Ruby on Rails. Add the gem to your Gemfile, then you can configure the URL of the JSON-RPC API server in the `config/application.rb` file (or the `environements` subfolder).
+
+```
+class Application < Rails::Application
+  config.etheruby_uri='http://my_ethereum_node:8545'
+end
+```
 
 ## The client
 
@@ -79,12 +91,12 @@ Keyword | Type | Semantic
 ------- | ---- | --------
 from | String | Set the from address for this method call.
 parameters | Array | Set the types of arguments this method can receive.
-returns | Array | Set the returns types.
+returns | Array | Set the return types.
 value | FixNum | Set the value of ether sent with this method.
 gas | FixNum | Sets the gas to use with this method.
 gas_price | FixNum | Set the gas_price to use with this method.
 
-If your method does not take any arguments and do not returns anything, you can remove the block after the keyword.
+If your method doesn't take any argument and doesn't return anything, you can remove the block after the keyword.
 
 ```
 Foo.bar([2.125, 8.5])
