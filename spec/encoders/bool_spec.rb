@@ -8,8 +8,8 @@ describe Etheruby::Encoders::Bool do
   end
 
   it 'decodes correctly' do
-    expect(described_class.new('1'.rjust(64,'0')).decode).to eq(true)
-    expect(described_class.new('0'.rjust(64,'0')).decode).to eq(false)
+    expect(described_class.new('1'.rjust(64,'0')).decode).to eq([true, 32])
+    expect(described_class.new('0'.rjust(64,'0')).decode).to eq([false, 32])
   end
 
 end

@@ -9,7 +9,7 @@ module Etheruby::Encoders
     end
 
     def decode
-      Uint.new(data).decode[0] == 1
+      return Uint.new(data).decode[0] == 1, 32
     end
   end
 
