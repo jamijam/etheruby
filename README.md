@@ -8,7 +8,7 @@
 
 Etheruby is a library including a client for the JSON-RPC API and a Object-Contract Mapper to interact with smart-contracts on the Ethereum blockchain.
 
-**Current status** : Release candidate 1. If no major bug is found within this release, it will be promoted version 1.0.0 stable.
+**Current status** : Release candidate 2. If no major bug is found within this release, it will be promoted version 1.0.0 stable.
 
 ## Installation
 

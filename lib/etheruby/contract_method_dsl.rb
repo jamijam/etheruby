@@ -26,8 +26,20 @@ module Etheruby
       data[:returns] = args
     end
 
-    def method_missing(sym, *args)
-      data[sym] = args[0]
+    def from(_address)
+      data[:from] = "0x#{_address.to_s(16)}"
+    end
+
+    def gas(_gas)
+      data[:gas] = "0x#{_gas.to_s(16)}"
+    end
+
+    def gasPrice(_gp)
+      data[:gasPrice] = "0x#{_gas.to_s(16)}"
+    end
+
+    def value(_v)
+      data[:value] = "0x#{_gas.to_s(16)}"
     end
 
     def validate!
