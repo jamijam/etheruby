@@ -15,9 +15,7 @@ module Etheruby
       if returns.count == 1
         Etheruby::treat_variable(returns[0], response, :decode)
       else
-        returns.each do |type|
-          
-        end
+        raise NotImplementedError.new("Multiple returns are not yet supported")
       end
     end
 
