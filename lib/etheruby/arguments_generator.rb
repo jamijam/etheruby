@@ -18,21 +18,35 @@ module Etheruby
 
     def to_s
       raise ArgumentsCountError.new("Bad number of arguments") unless args.count == params.count
-      head = ''
+      head = []
       tail = ''
-      current_tail_position = (params.count*32)
+      current_tail_position = 0
       (0..params.count-1).each do |i|
         param, arg = params[i], args[i]
         if Etheruby.is_static_type? param
-          head += Etheruby.treat_variable(param, arg, :encode).to_s
+          head << {final: Etheruby.treat_variable(param, arg, :encode).to_s}
         else
-          head += Etheruby::Encoders::Uint.new(current_tail_position).encode
+          head << {pointer: current_tail_position}
           content = Etheruby.treat_variable(param, arg, :encode).to_s
           current_tail_position += content.length/2
           tail += content
         end
       end
-      return head + tail
+      head_size = head.map { |x|
+        if x.has_key?(:pointer)
+          32
+        else
+          x[:final].length/2
+        end
+      }.inject(0){|sum,x| sum + x }
+      final_head = head.map { |x|
+        if x.has_key?(:pointer)
+          Etheruby::Encoders::Uint.new(head_size + x[:pointer]).encode
+        else
+          x[:final]
+        end
+      }.join
+      return final_head + tail
     end
 
   end

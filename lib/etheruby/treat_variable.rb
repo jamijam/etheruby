@@ -19,11 +19,9 @@ module Etheruby
 
   def treat_variable(param, arg, direction)
     if match = TypeMatchers.is_sized_type(param)
-      # Parameter is a sized type, e.g. uint256, byte32 ...
       klass = Etheruby::Encoders.const_get(match[1].capitalize)
-      return case klass
-      when Encoders::Bytes
-        Byte.new(match[2].to_i, arg)
+      if match[1] == 'bytes'
+        Encoders::Byte.new(match[2].to_i, arg)
       else
         klass.new(arg)
       end.send(direction)
