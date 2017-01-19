@@ -40,7 +40,7 @@ module Etheruby
       Etheruby::Encoders::DynamicArray.new(match[1], arg).send(direction)
 
     else
-      # Parameter is a single-word type : string, bytes, address etc...
+      # Parameter is a single-word type : string, bytes, address, function etc...
       Etheruby::Encoders.const_get(param.capitalize).new(arg).send(direction)
 
     end
