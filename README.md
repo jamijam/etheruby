@@ -1,10 +1,8 @@
 # Etheruby
 
-[![Gem Version](https://img.shields.io/gem/v/etheruby.svg)][ruby-gems]
 [![Build Status](https://travis-ci.org/MechanicalSloth/etheruby.svg?branch=master)][travis]
 [![codecov](https://codecov.io/gh/MechanicalSloth/etheruby/branch/master/graph/badge.svg)][coverage]
 
-[ruby-gems]: https://rubygems.org/gems/etheruby
 [travis]: https://travis-ci.org/MechanicalSloth/etheruby
 [coverage]: https://codecov.io/gh/MechanicalSloth/etheruby
 
