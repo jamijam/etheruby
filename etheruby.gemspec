@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'etheruby'
-  s.version = '0.9.0'
+  s.version = '0.9.1'
   s.date = '2017-01-19'
   s.summary = 'Etheruby : The Ethereum Object-Contract Mapper (OCM) for Ruby.'
   s.description = 'Etheruby is a library including a client for the JSON-RPC API and a Object-Contract Mapper to interact with smart-contracts.'
@@ -9,7 +9,6 @@ Gem::Specification.new do |s|
   s.files = Dir['lib/**/*']
   s.license = 'MIT'
   s.homepage = 'https://github.com/MechanicalSloth/etheruby'
-  s.add_development_dependency 'digest-sha3', '~> 1.1'
   s.add_development_dependency 'simplecov', '~> 0.12'
   s.add_development_dependency 'rake', '~> 12.0'
   s.add_development_dependency 'rspec', '~> 3.5'
