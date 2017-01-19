@@ -103,4 +103,4 @@ If you find an issue, please open an issue here, on Github.
 
 If you want to help this project, please check the opened issues on Github, fork this repo, fix the issue and do a pull request here. Do not mess with the version of the gem, I'll handle it.
 
-If you don't want to get involved in the developpement of Etheruby buy you want to help, I love beers and pizza, and I love Ethers. Here is my Ethereum address : `0x5124e63dec9acc65203ea8e5f98d4d151c39889f`
+If you don't want to get involved in the developpement of Etheruby but you want to help, I love beers and pizza, and I love Ethers. Here is my Ethereum address : `0x5124e63dec9acc65203ea8e5f98d4d151c39889f`
