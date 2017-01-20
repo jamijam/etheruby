@@ -98,7 +98,7 @@ If your method doesn't take any argument and doesn't return anything, you can re
 
 ```
 Foo.bar([2.125, 8.5])
-Foo.baz(69,true).to eq(false)
+Foo.baz(69,true)
 Foo.sam("dave".codepoints, true, [1,2,3])
 Foo.f(0x123, [0x456, 0x789], "1234567890".codepoints, "Hello, world!".codepoints)
 ```
