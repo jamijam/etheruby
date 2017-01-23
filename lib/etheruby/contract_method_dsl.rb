@@ -22,7 +22,7 @@ module Etheruby
       end
     end
 
-    def returns(*args)
+    def returns(args)
       data[:returns] = args
     end
 

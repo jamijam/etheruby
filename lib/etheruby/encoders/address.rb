@@ -5,7 +5,12 @@ module Etheruby::Encoders
 
   class Address < Base
     def encode
-      Uint.new(data).encode
+      puts data.class
+      if data.is_a?(::String)
+        Uint.new(data[2..64].to_i(16)).encode
+      else
+        Uint.new(data).encode
+      end
     end
 
     def decode

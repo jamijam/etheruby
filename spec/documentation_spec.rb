@@ -7,11 +7,11 @@ class Foo < Etheruby::Contract
   end
   method :baz do
     parameters :uint32, :bool
-    returns :bool
+    returns good: :bool
   end
   method :sam do
     parameters :bytes, :bool, array(:uint256)
-    returns :bool
+    returns good: :bool
   end
   method :f do
     parameters :uint256, array(:uint32), :bytes10, :bytes
@@ -44,7 +44,7 @@ describe Foo do
     expect(described_class).to receive(:call_api).with(call) do
       {'result'=>'0x0000000000000000000000000000000000000000000000000000000000000000'}
     end
-    expect(described_class.baz(69,true)).to eq(false)
+    expect(described_class.baz(69,true).good).to eq(false)
   end
 
   it 'parses sam correctly' do

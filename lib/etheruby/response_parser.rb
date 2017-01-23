@@ -4,6 +4,15 @@ require_relative 'encoders/int'
 
 module Etheruby
 
+  class ResponseHolder
+    def initialize(_values={})
+      @values=_values
+    end
+    def method_missing(sym, *args)
+      @values[sym]
+    end
+  end
+
   class ResponseParser
 
     attr_reader :returns, :response
@@ -14,11 +23,12 @@ module Etheruby
     end
 
     def parse
+      return unless @returns
       real_response = @response
-      values = []
+      responses = {}
       i = 0
       loop do
-        return_type = returns[i]
+        return_name, return_type = returns.keys[i], returns.values[i]
         if Etheruby::is_static_type?(return_type)
           v, s = Etheruby::treat_variable(return_type, real_response, :decode)
         else
@@ -32,16 +42,12 @@ module Etheruby
         if v.is_a? Etheruby::Encoders::DynamicArray or v.is_a? Etheruby::Encoders::StaticArray
           v, s = v.decode
         end
-        values << v
-        break if values.count == returns.count
+        responses[return_name] = v
+        break if responses.count == returns.count
         real_response = real_response[s*2..real_response.length]
         i += 1
       end
-      if values.count == 1
-        values[0]
-      else
-        values
-      end
+      ResponseHolder.new(responses)
     end
 
   end
