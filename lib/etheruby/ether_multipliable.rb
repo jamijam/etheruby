@@ -32,3 +32,7 @@ end
 class Bignum
   include EtherMultipliable
 end
+
+class Float
+  include EtherMultipliable
+end

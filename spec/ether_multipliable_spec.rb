@@ -1,6 +1,6 @@
-require_relative '../lib/etheruby/fixnum_ethers.rb'
+require_relative '../lib/etheruby/ether_multipliable'
 
-describe Fixnum do
+describe EtherMultipliable do
 
   it 'converts kwei to wei' do
     expect(3.kwei).to eq(3000)
@@ -28,6 +28,10 @@ describe Fixnum do
 
   it 'converts ethers to wei' do
     expect(3.ether).to eq(3000000000000000000)
+  end
+
+  it 'converts 0.ethers to wei' do
+    expect(0.3.ether).to eq(300000000000000000)
   end
 
   it 'converts kether to wei' do
