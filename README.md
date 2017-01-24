@@ -1,4 +1,5 @@
 # Etheruby
+![](https://raw.githubusercontent.com/MechanicalSloth/etheruby/master/etheruby.png)
 
 [![Build Status](https://travis-ci.org/MechanicalSloth/etheruby.svg?branch=master)][travis]
 [![codecov](https://codecov.io/gh/MechanicalSloth/etheruby/branch/master/graph/badge.svg)][coverage]
@@ -7,8 +8,6 @@
 [coverage]: https://codecov.io/gh/MechanicalSloth/etheruby
 
 Etheruby is a library including a client for the JSON-RPC API and a Object-Contract Mapper to interact with smart-contracts on the Ethereum blockchain.
-
-**Current status** : Release candidate 2. If no major bug is found within this release, it will be promoted version 1.0.0 stable.
 
 ## Installation
 
