@@ -24,13 +24,7 @@ And then run `bundle install`.
 
 ### Usage with Ruby on Rails
 
-You can use Etheruby from Ruby on Rails. Add the gem to your Gemfile, then you can configure the URL of the JSON-RPC API server in the `config/application.rb` file (or the `environements` subfolder).
-
-```
-class Application < Rails::Application
-  config.etheruby_uri='http://my_ethereum_node:8545'
-end
-```
+You can use Etheruby from Ruby on Rails. Just add the gem to your Gemfile and then run the `rake etheruby:setup` task. It will create a new folder under `/app/contracts` and create the default `/app/config/etheruby.yml` configuration file.
 
 ## The client
 
@@ -105,9 +99,25 @@ Foo.f(0x123, [0x456, 0x789], "1234567890".codepoints, "Hello, world!".codepoints
 
 Return types of the method are also casted to native ruby types, therefore you have a full interoperability between the contract execution and the ruby program that consumes it.
 
+If you return multiple values, like `f(uint a) returns (uint b, string c)` you can create named variables in the contract definition to easily access them :
+
+```
+method :f do
+  parameters :uint256
+  returns b: :uint,
+          c: :string
+end
+response = Contract.f(1)
+response.b
+response.c
+...
+```
+
 ## Issues
 
 If you find an issue, please open an issue here, on Github.
+
+Known issue : The way on `Ruby on rails` to load Contracts from `/app/contracts` is not perfect. You must relaunch `rails s` after a contract definition modification.
 
 ## How to contribute ?
 

@@ -1,0 +1,9 @@
+namespace :etheruby do
+  desc "Creates etheruby scaffold for rails"
+  task :setup => :environment do
+    require 'fileutils'
+    FileUtils.mkdir('./app/contracts') unless Dir.exist? './app/contracts'
+    FileUtils.touch('./app/contracts/.keep')
+    FileUtils.cp(File.join(File.dirname(__FILE__), 'etheruby.yml'), './config/etheruby.yml')
+  end
+end

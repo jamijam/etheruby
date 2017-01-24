@@ -1,17 +1,22 @@
 Dir["./app/contracts/**/*.rb"].each { |f| require f }
 
+require 'yaml'
+
 module Etheruby
 
   class Railtie < Rails::Railtie
+    # Loads configuration
     initializer "etheruby.configure" do |app|
-      if app.config.respond_to? :etheruby_uri
-        Etheruby::Client.uri = app.config.etheruby_uri
+      Etheruby::Configuration.conf = if File.exist? './config/etheruby.yml'
+        YAML.load_file('./config/etheruby.yml')
+      else
+        {}
       end
+    end
 
-      if app.config.respond_to? :etheruby_enable_transactions
-        Etheruby::TransactionInformation.information = \
-          app.config.etheruby_enable_transactions
-      end
+    # Create setup rake task
+    rake_tasks do
+      load File.join(File.dirname(__FILE__), '../../tasks/etheruby/setup.task')
     end
   end
 

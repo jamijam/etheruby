@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.name = 'etheruby'
-  s.version = '0.9.7'
+  s.version = '0.9.8'
   s.date = '2017-01-24'
   s.summary = 'Etheruby : The Ethereum Object-Contract Mapper (OCM) for Ruby.'
   s.description = 'Etheruby is a library including a client for the JSON-RPC API and a Object-Contract Mapper to interact with smart-contracts.'
   s.authors = ['Jérémy SEBAN']
   s.email = 'jeremy@seban.eu'
-  s.files = Dir['lib/**/*']
+  s.files = Dir['lib/**/*'] + Dir['tasks/**/*']
   s.license = 'MIT'
   s.homepage = 'https://github.com/MechanicalSloth/etheruby'
   s.add_development_dependency 'simplecov', '~> 0.12'

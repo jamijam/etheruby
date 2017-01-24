@@ -7,21 +7,6 @@ module Etheruby
   class NoContractMethodError < StandardError; end
   class NoPasswordForAddress < StandardError; end
 
-  class TransactionInformation
-    @@info = nil
-    def self.information=(_info)
-      @@info = _info
-    end
-    def self.set?() @@set end
-    def self.default_from() @@info[:default_from] end
-    def self.address_password(address)
-      unless @@info
-        raise NoPasswordForAddress.new("No password for address #{address}")
-      end
-      @@info[:addresses][address]
-    end
-  end
-
   def contract
     Class.new do
       def self.inherited(subclass)
@@ -95,17 +80,25 @@ module Etheruby
       end
 
       def self.do_eth_call(composed_body)
-        Client.eth.call(composed_body, "latest")
+        Client.eth.call(composed_body, Configuration.default_height || "latest")
       end
 
       def self.do_eth_transaction(composed_body)
-        from_address = composed_body[:from] || TransactionInformation.default_from
-        pwd = TransactionInformation.address_password(from_address)
-        return Client.personal.sendTransaction(composed_body.merge({from: from_address}), pwd)
+        from_address = composed_body[:from] || Configuration.default_from
+        pwd = Configuration.addresses[from_address]
+        Client.personal.sendTransaction(composed_body.merge({from: address_fix(from_address)}), pwd)
       end
 
       def self.address
-        "0x#{@@address.to_s(16)}"
+        address_fix(@@address)
+      end
+
+      def self.address_fix(addr)
+        if addr.is_a? ::String
+          addr
+        else
+          "0x#{@@address.to_s(16)}"
+        end
       end
     end
   end
