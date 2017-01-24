@@ -36,6 +36,7 @@ module Etheruby
       end
 
       def self.at_address(address)
+        address = address[2..64].to_i(16) if address.is_a? ::String
         @@address = address
       end
 
