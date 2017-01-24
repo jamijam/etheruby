@@ -5,6 +5,7 @@ module Etheruby::Encoders
   class Int < Base
 
     def encode(pad_to=64)
+      @data = data.to_i if data.is_a? ::String
       if data >= 0
         data.to_s(16).rjust(pad_to, '0')
       else
@@ -28,6 +29,7 @@ module Etheruby::Encoders
   class Uint < Base
 
     def encode(pad_to=64)
+      @data = data.to_i if data.is_a? ::String
       raise InvalidFormatForDataError.new("Unsigned integer #{data} < 0") if data < 0
       Int.new(data).encode(pad_to)
     end

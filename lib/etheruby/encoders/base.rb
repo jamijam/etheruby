@@ -6,7 +6,7 @@ module Etheruby
     class InvalidFormatForDataError < StandardError; end
 
     class Base
-      attr_reader :data
+      attr_accessor :data
 
       def initialize(_data)
         @data = _data

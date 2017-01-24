@@ -4,9 +4,9 @@ describe Etheruby::ResponseParser do
 
   it 'works on case 1' do
     data = '0x00000000000000000000000000000002200000000000000000000000000000000000000000000000000000000000000880000000000000000000000000000000'
-    sign = { case1: 'fixed128x128[2]'}
+    sign = ['fixed128x128[2]']
     resp = described_class.new(sign, data).parse
-    expect(resp.case1).to eq([2.125, 8.5])
+    expect(resp).to eq([2.125, 8.5])
   end
 
   it 'works on case 2' do

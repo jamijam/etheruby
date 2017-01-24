@@ -46,7 +46,16 @@ module Etheruby
         @@logger.debug("Registred method #{name}")
       end
 
+      def self.to_camel_case(sym)
+        ar = sym.to_s.split("_").map{|i| i.capitalize}
+        ar[0] = ar.first.downcase
+        ar.join.to_sym
+      end
+
       def self.method_missing(sym, *args)
+        unless @@c_methods.include? sym
+          sym = self.to_camel_case(sym)
+        end
         raise NoContractMethodError.new (
           "The method #{sym} does not exist in the #{self.class.to_s} contract."
         ) unless @@c_methods.include? sym
