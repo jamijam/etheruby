@@ -49,6 +49,7 @@ contract Foo {
   function baz(uint32 x, bool y) returns (bool r) { r = x > 32 || y; }
   function sam(bytes name, bool z, uint[] data) {}
   function f(uint,uint32[],bytes10,bytes) {}
+  function thisIsCamelCase() {}
 }
 ```
 
@@ -71,6 +72,7 @@ class Foo < Etheruby::Contract
   method :f do
     parameters :uint256, array(:uint32), :bytes10, :bytes
   end
+  method :thisIsCamelCase
 end
 ```
 
@@ -94,9 +96,13 @@ Foo.bar([2.125, 8.5])
 Foo.baz(69,true)
 Foo.sam("dave".codepoints, true, [1,2,3])
 Foo.f(0x123, [0x456, 0x789], "1234567890".codepoints, "Hello, world!".codepoints)
+Foo.this_is_camel_case
+Foo.thisIsCamelCase
 ```
 
 Return types of the method are also casted to native ruby types, therefore you have a full interoperability between the contract execution and the ruby program that consumes it.
+
+The last two calls : `this_is_camel_case / thisIsCamelCase` are bound to the same method. `this_is_camel_case` will be resolved to the `thisIsCamelCase`.
 
 If you return multiple values, like `f(uint a) returns (uint b, string c)` you can create named variables in the contract definition to easily access them :
 
