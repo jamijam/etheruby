@@ -86,7 +86,8 @@ module Etheruby
       def self.do_eth_transaction(composed_body)
         from_address = composed_body[:from] || Configuration.default_from
         pwd = Configuration.addresses[from_address]
-        Client.personal.sendTransaction(composed_body.merge({from: address_fix(from_address)}), pwd)
+        composed_body[:from] = address_fix(from_address)
+        Client.personal.sendTransaction(composed_body, pwd)
       end
 
       def self.address
@@ -97,7 +98,7 @@ module Etheruby
         if addr.is_a? ::String
           addr
         else
-          "0x#{@@address.to_s(16)}"
+          "0x#{addr.to_s(16)}"
         end
       end
     end
