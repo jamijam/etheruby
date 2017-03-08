@@ -1,8 +1,8 @@
 # Etheruby
-![](https://raw.githubusercontent.com/MechanicalSloth/etheruby/master/etheruby.png)
+![](https://raw.githubusercontent.com/FranceChain-Solutions/etheruby/master/etheruby.png)
 
-[![Build Status](https://travis-ci.org/MechanicalSloth/etheruby.svg?branch=master)][travis]
-[![codecov](https://codecov.io/gh/MechanicalSloth/etheruby/branch/master/graph/badge.svg)][coverage]
+[![Build Status](https://travis-ci.org/FranceChain-Solutions/etheruby.svg?branch=master)][travis]
+[![codecov](https://codecov.io/gh/FranceChain-Solutions/etheruby/branch/master/graph/badge.svg)][coverage]
 
 [travis]: https://travis-ci.org/MechanicalSloth/etheruby
 [coverage]: https://codecov.io/gh/MechanicalSloth/etheruby
