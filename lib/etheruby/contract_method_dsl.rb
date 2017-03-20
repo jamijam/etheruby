@@ -1,5 +1,3 @@
-require 'sha3'
-
 module Etheruby
 
   class ContractMethodDSL
