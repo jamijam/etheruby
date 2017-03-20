@@ -1,3 +1,5 @@
+require 'sha3'
+
 module Etheruby
 
   class ContractMethodDSL
@@ -47,7 +49,8 @@ module Etheruby
     def validate!
       data[:params] = [] unless data.has_key? :params
       signature = "#{@data[:name]}(#{data[:params].join(',')})"
-      data[:signature] = "0x#{Digest::SHA3.hexdigest(signature,256)[0..7]}"
+      hashed_signature = ::SHA3::Digest.new(:sha256).hexdigest(signature)
+      data[:signature] = "0x#{hashed_signature[0..7]}"
       data
     end
 

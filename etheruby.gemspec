@@ -13,6 +13,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 12.0'
   s.add_development_dependency 'rspec', '~> 3.5'
   s.add_runtime_dependency 'multi_json', '~> 1.12'
-  s.add_runtime_dependency 'sha3', '~> 1.0'
+  s.add_runtime_dependency 'sha3', '~> 0.2.6'
   s.required_ruby_version = '~> 2.3'
 end

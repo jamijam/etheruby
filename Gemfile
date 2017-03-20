@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'sha3', '~> 1.0'
+gem 'sha3', '~> 0.2.6'
 gem 'multi_json', '~> 1.12'
 
 gem 'rake', '~> 12.0', require: false, group: :test

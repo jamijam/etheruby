@@ -1,4 +1,3 @@
-require 'bundler/setup'
 require 'logger'
 require_relative 'etheruby/client'
 require_relative 'etheruby/contract'
