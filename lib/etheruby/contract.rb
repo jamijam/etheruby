@@ -52,11 +52,19 @@ module Etheruby
         arguments = ArgumentsGenerator.new(method_info[:params], args).to_s
         data = "#{method_info[:signature]}#{arguments}"
         composed_body = { to: self.address, data: data }
+
         [ :gas, :gasPrice, :value, :from ].each { |kw|
           composed_body[kw] = method_info[kw] if method_info.has_key? kw
         }
+
         @@logger.debug("Calling #{method_info[:name]} with parameters #{composed_body.inspect}")
-        response = call_api composed_body
+
+        response = if method_info.has_key?(:force_transac) and method_info[:force_transac]
+          do_eth_transaction composed_body
+        else
+          call_api composed_body
+        end
+
         if response.is_a? Hash and response.has_key? 'error'
           @@logger.error("Failed contract execution #{response['error']['message']}")
         elsif response.is_a? Hash and response.has_key? 'result'

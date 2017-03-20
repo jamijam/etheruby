@@ -42,6 +42,10 @@ module Etheruby
       data[:value] = "0x#{_gas.to_s(16)}"
     end
 
+    def force_transaction!
+      data[:force_transac] = true
+    end
+
     def validate!
       data[:params] = [] unless data.has_key? :params
       signature = "#{@data[:name]}(#{data[:params].join(',')})"
