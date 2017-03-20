@@ -1,6 +1,6 @@
 language: ruby
 cache: bundler
-dist: xenial
+dist: trusty
 rvm:
 - 2.3.0
 deploy:
