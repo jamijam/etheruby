@@ -14,7 +14,7 @@ module Etheruby::Encoders
 
     def decode
       v, s = Uint.new(data).decode
-      return "0x#{v.to_s(16)}", s
+      return "0x#{v.to_s(16).rjust(40, "0")}", s
     end
   end
 

@@ -106,7 +106,7 @@ module Etheruby
         if addr.is_a? ::String
           addr
         else
-          "0x#{addr.to_s(16)}"
+          "0x#{addr.to_s(16).rjust(40, "0")}"
         end
       end
     end
