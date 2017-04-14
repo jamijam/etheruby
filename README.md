@@ -23,7 +23,7 @@ And then run `bundle install`.
 
 ### Usage with Ruby on Rails
 
-You can use Etheruby from Ruby on Rails. Just add the gem to your Gemfile and then run the `rake etheruby:setup` task. It will create a new folder under `/app/contracts` and create the default `/app/config/etheruby.yml` configuration file.
+You can use Etheruby from Ruby on Rails. Just add the gem to your Gemfile and then run the `rake etheruby:setup` task. It will create a new folder under `app/contracts` and create the default `app/config/etheruby.yml` configuration file.
 
 ## The client
 
@@ -56,23 +56,24 @@ contract Foo {
 Thus for our `Foo` if we wanted to describe it with Etheruby, we would simply create a `Foo` class and make it inherit from the `Etheruby::Contract` class :
 
 ```
-class Foo < Etheruby::Contract
+class Foo
+  include Etheruby::Contract
   at_address 0x57eb1e64d972d9937c6f6f07a865e91608252c97
-  method :bar do
+  contract_method :bar do
     parameters array(:fixed128x128, 2)
   end
-  method :baz do
+  contract_method :baz do
     parameters :uint32, :bool
     returns :bool
   end
-  method :sam do
+  contract_method :sam do
     parameters :bytes, :bool, array(:uint256)
     returns :bool
   end
-  method :f do
+  contract_method :f do
     parameters :uint256, array(:uint32), :bytes10, :bytes
   end
-  method :thisIsCamelCase
+  contract_method :thisIsCamelCase
 end
 ```
 
@@ -107,7 +108,7 @@ The last two calls : `this_is_camel_case / thisIsCamelCase` are bound to the sam
 If you return multiple values, like `f(uint a) returns (uint b, string c)` you can create named variables in the contract definition to easily access them :
 
 ```
-method :f do
+contract_method :f do
   parameters :uint256
   returns b: :uint,
           c: :string
@@ -120,9 +121,17 @@ response.c
 
 ## Issues
 
-If you find an issue, please open an issue here, on Github.
+A major issue have been found in V1 API design, due to this, the compatibility is not assured between V1 and V2 : note that inheritance is not working anymore. Now, you must use the `include` method like this :
 
-Known issue : The way on `Ruby on rails` to load Contracts from `/app/contracts` is not perfect. You must relaunch `rails s` after a contract definition modification.
+```
+  class Foo
+    include Etheruby::Contract
+  end
+```
+
+Known issue : The way on `Ruby on rails` to load Contracts from `/app/contracts` is not perfect. You must relaunch `rails s` after a contract definition modification. If somebody can help me to achieve this in a cleaner way, I'll be happy ;).
+
+If you find an issue, please open an issue here, on Github.
 
 ## How to contribute ?
 

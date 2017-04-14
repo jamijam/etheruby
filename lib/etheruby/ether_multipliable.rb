@@ -25,11 +25,7 @@ module EtherMultipliable
   end
 end
 
-class Fixnum
-  include EtherMultipliable
-end
-
-class Bignum
+class Integer
   include EtherMultipliable
 end
 
