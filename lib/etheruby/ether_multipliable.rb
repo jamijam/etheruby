@@ -25,8 +25,18 @@ module EtherMultipliable
   end
 end
 
-class Integer
-  include EtherMultipliable
+if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.4.0')
+  class Integer
+    include EtherMultipliable
+  end
+else
+  class Fixnum
+    include EtherMultipliable
+  end
+
+  class Bignum
+    include EtherMultipliable
+  end
 end
 
 class Float
