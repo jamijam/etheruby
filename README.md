@@ -119,6 +119,39 @@ response.c
 ...
 ```
 
+## Contract instances
+
+Maybe you have different contract instances, that is, the same same smart contract but in different addresses. Then you have to include ContractInstance:
+
+
+```
+class Foo
+  include Etheruby::ContractInstance
+  contract_method :bar do
+    parameters array(:fixed128x128, 2)
+  end
+  contract_method :baz do
+    parameters :uint32, :bool
+    returns :bool
+  end
+  contract_method :sam do
+    parameters :bytes, :bool, array(:uint256)
+    returns :bool
+  end
+  contract_method :f do
+    parameters :uint256, array(:uint32), :bytes10, :bytes
+  end
+  contract_method :thisIsCamelCase
+end
+```
+
+In this case instead of calling at_address in the class definition, you must pass the address when you build the instance:
+```
+foo = Foo.new(0x57eb1e64d972d9937c6f6f07a865e91608252c97)
+foo.bar([2.125, 8.5])
+foo.sam("dave".codepoints, true, [1,2,3])
+```
+
 ## Issues
 
 A major issue have been found in V1 API design, due to this, the compatibility is not assured between V1 and V2 : note that inheritance is not working anymore. Now, you must use the `include` method like this :
