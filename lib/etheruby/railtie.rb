@@ -8,7 +8,7 @@ module Etheruby
     # Loads configuration
     initializer "etheruby.configure" do |app|
       Etheruby::Configuration.conf = if File.exist? './config/etheruby.yml'
-        YAML.load_file('./config/etheruby.yml')
+        YAML.load(ERB.new(File.read("./config/etheruby.yml")).result).with_indifferent_access
       else
         {}
       end
