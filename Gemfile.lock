@@ -9,7 +9,7 @@ GEM
     docile (1.1.5)
     json (2.0.3)
     multi_json (1.12.1)
-    rake (12.0.0)
+    rake (12.3.3)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -37,10 +37,10 @@ PLATFORMS
 DEPENDENCIES
   codecov
   multi_json (~> 1.12)
-  rake (~> 12.0)
+  rake (~> 12.3, >= 12.3.3)
   rspec (~> 3.5)
   sha3 (~> 0.2.6)
   simplecov (~> 0.11)
 
 BUNDLED WITH
-   1.13.7
+   1.17.3
